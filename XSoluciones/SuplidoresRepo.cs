@@ -13,7 +13,8 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = $"SELECT * FROM Suplidores WHERE Borrado = 0 AND RNC = { rnc}";
+                    cmd.CommandText = $"SELECT * FROM Suplidores WHERE Borrado = 0 AND RNC = @rnc";
+                    cmd.Parameters.AddWithValue("rnc", rnc);
                     cmd.Connection = connection;
                     DataTable dt = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -67,7 +68,11 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = $"INSERT INTO Suplidores VALUES ('{suplidores.Nombre}', '{suplidores.RNC}', '{suplidores.Representante}', '{suplidores.Direccion}', 0)";
+                    cmd.CommandText = $"INSERT INTO Suplidores VALUES (@Nombre, @RNC, @Representante, @Direccion, 0)";
+                    cmd.Parameters.AddWithValue("Nombre", suplidores.Nombre);
+                    cmd.Parameters.AddWithValue("RNC", suplidores.RNC);
+                    cmd.Parameters.AddWithValue("Representante", suplidores.Representante);
+                    cmd.Parameters.AddWithValue("Direccion", suplidores.Direccion);
                     cmd.Connection = connection;
                     connection.Open();
                     try
@@ -88,7 +93,8 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = $"UPDATE Suplidores SET Borrado = 1 WHERE RNC = { rnc}";
+                    cmd.CommandText = $"UPDATE Suplidores SET Borrado = 1 WHERE RNC = @rnc";
+                    cmd.Parameters.AddWithValue("rnc", rnc);
                     cmd.Connection = connection;
                     connection.Open();
                     try
@@ -112,7 +118,10 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = $"UPDATE Suplidores SET Representante ='{suplidores.Representante}', Direccion ='{suplidores.Direccion}' WHERE RNC = { rnc} AND Borrado = 0";
+                    cmd.CommandText = $"UPDATE Suplidores SET Representante =@Representante, Direccion =@Direccion WHERE RNC = @rnc AND Borrado = 0";
+                    cmd.Parameters.AddWithValue("Representante", suplidores.Representante);
+                    cmd.Parameters.AddWithValue("Direccion", suplidores.Direccion);
+                    cmd.Parameters.AddWithValue("rnc", rnc);
                     cmd.Connection = connection;
                     connection.Open();
                     try
