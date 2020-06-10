@@ -13,7 +13,8 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = $"SELECT * FROM Suplidores WHERE Borrado = 0 AND RNC = @rnc";
+                    cmd.CommandText = "ConsultarPorRNC";
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("rnc", rnc);
                     cmd.Connection = connection;
                     DataTable dt = new DataTable();
@@ -41,7 +42,8 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM Suplidores WHERE Borrado = 0";
+                    cmd.CommandText = "ConsultarTodos";
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Connection = connection;
                     DataTable dt = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -68,7 +70,8 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = $"INSERT INTO Suplidores VALUES (@Nombre, @RNC, @Representante, @Direccion, 0)";
+                    cmd.CommandText = "Crear";
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("Nombre", suplidores.Nombre);
                     cmd.Parameters.AddWithValue("RNC", suplidores.RNC);
                     cmd.Parameters.AddWithValue("Representante", suplidores.Representante);
@@ -93,7 +96,8 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = $"UPDATE Suplidores SET Borrado = 1 WHERE RNC = @rnc";
+                    cmd.CommandText = "Eliminar";
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("rnc", rnc);
                     cmd.Connection = connection;
                     connection.Open();
@@ -118,7 +122,8 @@ namespace XSoluciones
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.CommandText = $"UPDATE Suplidores SET Representante =@Representante, Direccion =@Direccion WHERE RNC = @rnc AND Borrado = 0";
+                    cmd.CommandText = "Modificar";
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("Representante", suplidores.Representante);
                     cmd.Parameters.AddWithValue("Direccion", suplidores.Direccion);
                     cmd.Parameters.AddWithValue("rnc", rnc);
